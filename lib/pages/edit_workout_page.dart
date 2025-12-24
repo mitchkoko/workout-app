@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/workout.dart';
 import '../models/exercise.dart';
 import '../data/exercise_database.dart';
-import '../providers/workout_provider.dart';
+import '../features/workout/presentation/cubits/workout_cubit.dart';
 
 class EditWorkoutPage extends StatefulWidget {
   final Workout workout;
@@ -104,8 +105,7 @@ class _EditWorkoutPageState extends State<EditWorkoutPage> {
       exercises: _exercises,
     );
 
-    final provider = WorkoutProviderScope.of(context);
-    provider.saveEditedWorkout(widget.workout, editedWorkout);
+    context.read<WorkoutCubit>().saveEditedWorkout(widget.workout, editedWorkout);
 
     // Pop back to the workout list
     Navigator.popUntil(context, (route) => route.isFirst);

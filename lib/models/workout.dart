@@ -27,6 +27,24 @@ class WorkoutExercise {
       weight: clearWeight ? null : (weight ?? this.weight),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'exercise': exercise.toJson(),
+      'sets': sets,
+      'reps': reps,
+      'weight': weight,
+    };
+  }
+
+  factory WorkoutExercise.fromJson(Map<String, dynamic> json) {
+    return WorkoutExercise(
+      exercise: Exercise.fromJson(Map<String, dynamic>.from(json['exercise'])),
+      sets: json['sets'] as int,
+      reps: json['reps'] as int,
+      weight: json['weight'] as double?,
+    );
+  }
 }
 
 class Workout {
@@ -67,5 +85,27 @@ class Workout {
   List<MuscleGroup> get primaryMuscles {
     final muscles = exercises.map((e) => e.exercise.primaryMuscle).toSet();
     return muscles.toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'exercises': exercises.map((e) => e.toJson()).toList(),
+      'isCustom': isCustom,
+    };
+  }
+
+  factory Workout.fromJson(Map<String, dynamic> json) {
+    return Workout(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      exercises: (json['exercises'] as List<dynamic>)
+          .map((e) => WorkoutExercise.fromJson(Map<String, dynamic>.from(e)))
+          .toList(),
+      isCustom: json['isCustom'] as bool? ?? false,
+    );
   }
 }

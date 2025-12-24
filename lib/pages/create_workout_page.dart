@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/workout.dart';
 import '../models/exercise.dart';
 import '../data/exercise_database.dart';
-import '../providers/workout_provider.dart';
+import '../features/workout/presentation/cubits/workout_cubit.dart';
 
 class CreateWorkoutPage extends StatefulWidget {
   const CreateWorkoutPage({super.key});
@@ -96,7 +97,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
       isCustom: true,
     );
 
-    WorkoutProviderScope.of(context).addCustomWorkout(workout);
+    context.read<WorkoutCubit>().addCustomWorkout(workout);
     Navigator.pop(context);
   }
 

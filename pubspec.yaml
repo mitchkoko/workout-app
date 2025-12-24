@@ -35,6 +35,17 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # State management
+  flutter_bloc: ^8.1.6
+
+  # Local storage
+  hive_ce: ^2.6.0
+  hive_ce_flutter: ^2.1.0
+
+  # Date formatting
+  intl: ^0.19.0
+  avatar_glow: ^3.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

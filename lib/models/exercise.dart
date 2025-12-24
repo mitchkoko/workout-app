@@ -43,6 +43,34 @@ class Exercise {
     required this.equipment,
     required this.instructions,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'primaryMuscle': primaryMuscle.name,
+      'secondaryMuscles': secondaryMuscles.map((m) => m.name).toList(),
+      'equipment': equipment.name,
+      'instructions': instructions,
+    };
+  }
+
+  factory Exercise.fromJson(Map<String, dynamic> json) {
+    return Exercise(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      primaryMuscle: MuscleGroup.values.firstWhere(
+        (m) => m.name == json['primaryMuscle'],
+      ),
+      secondaryMuscles: (json['secondaryMuscles'] as List<dynamic>)
+          .map((m) => MuscleGroup.values.firstWhere((mg) => mg.name == m))
+          .toList(),
+      equipment: Equipment.values.firstWhere(
+        (e) => e.name == json['equipment'],
+      ),
+      instructions: json['instructions'] as String,
+    );
+  }
 }
 
 extension MuscleGroupExtension on MuscleGroup {
